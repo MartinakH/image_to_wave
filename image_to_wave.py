@@ -8,7 +8,7 @@ start_time = perf_counter_ns()
 
 class settings:
 
-    image_target = "temp_x_bmp_image.bmp"
+    image_target = "temp_test_bmp_image.bmp"
 
 
     audio_resolution = 2                #possibe values: 1,2,4
@@ -254,10 +254,10 @@ class sound_processing:
 
 
 
-#--------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------------------------
 
 
-wav_file_processing.save_audio("x2",wav_file_processing.make_wav(sound_processing.make_sin(220,settings.audio_length,settings.sample_number)),".wav")
+#wav_file_processing.save_audio("x2",wav_file_processing.make_wav(sound_processing.make_sin(220,settings.audio_length,settings.sample_number)),".wav")
 print(image_processing.get_image_data(settings.image_target))
 dib_header_decoding.print_header_info()
 
