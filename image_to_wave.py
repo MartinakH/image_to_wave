@@ -6,7 +6,7 @@ from random import randint
 from time import perf_counter_ns
 start_time = perf_counter_ns()
 
-class settings:
+class config:
 
     image_target = "temp_test_bmp_image.bmp"
 
@@ -15,6 +15,36 @@ class settings:
     sample_rate = 20000
     audio_length = 2
     sample_number = audio_length *sample_rate
+
+
+    def populate_config():
+        config_file = open("settings.txt","r")
+        config_text = config_file.readlines()
+        config_file.close()
+
+        config_list = []
+
+        #for i,text in enumerate(config_text):
+
+        for text in config_text:
+            if ":" in text:
+                text.find("\n")
+                config_list.append([text[0:text.find(":")],text[text.find(":")+1 :text.find("\n")]])
+
+        
+
+        print(config_list)
+
+
+
+
+
+        return()
+
+config.populate_config()
+
+
+
 
 
 #--------------------------------------------------------------------------------------------------------------
@@ -197,14 +227,14 @@ class wav_file_processing:
         bloc_size = wav_file_processing.num_to_bytes(16,4)                                                          #4b
         audio_format = wav_file_processing.num_to_bytes(1,2)                                                        #2b
         number_of_channels = wav_file_processing.num_to_bytes(1,2)                                                  #2b
-        sample_rate = wav_file_processing.num_to_bytes(settings.sample_rate,4)                                      #4b
-        byte_per_second = wav_file_processing.num_to_bytes(settings.sample_rate * 1 * settings.audio_resolution,4)  #4b
-        byte_per_bloc = wav_file_processing.num_to_bytes(1 * settings.audio_resolution,2)                           #2b
-        bits_per_sample = wav_file_processing.num_to_bytes(settings.audio_resolution * 8,2)                         #2b
+        sample_rate = wav_file_processing.num_to_bytes(config.sample_rate,4)                                      #4b
+        byte_per_second = wav_file_processing.num_to_bytes(config.sample_rate * 1 * config.audio_resolution,4)  #4b
+        byte_per_bloc = wav_file_processing.num_to_bytes(1 * config.audio_resolution,2)                           #2b
+        bits_per_sample = wav_file_processing.num_to_bytes(config.audio_resolution * 8,2)                         #2b
 
         data_bloc_id = b"data"                                                                                      #4b
-        data_size = wav_file_processing.num_to_bytes(len(wave)*settings.audio_resolution,4)                         #4b
-        data = wav_file_processing.num_to_bytes(wave,settings.audio_resolution)
+        data_size = wav_file_processing.num_to_bytes(len(wave)*config.audio_resolution,4)                         #4b
+        data = wav_file_processing.num_to_bytes(wave,config.audio_resolution)
 
         #please don't judge me... at least it's readable...
         file_bytes = file_type_bloc_id + file_size + file_format_id
@@ -229,7 +259,7 @@ class sound_processing:
         wave_min = min(wave_in)
         wave_max = max(wave_in)
         for i in range(0,len(wave_in)):
-            wave_out.append(math.floor((wave_in[i]-wave_min)/(wave_max-wave_min)*(math.pow(2,settings.audio_resolution*8)-1)))
+            wave_out.append(math.floor((wave_in[i]-wave_min)/(wave_max-wave_min)*(math.pow(2,config.audio_resolution*8)-1)))
         return(wave_out)
 
     def make_sin(frequency:float,time:float,sample_num:int)->list:
@@ -257,8 +287,8 @@ class sound_processing:
 #----------------------------------------------------------------------------------------------------------------------------------
 
 
-#wav_file_processing.save_audio("x2",wav_file_processing.make_wav(sound_processing.make_sin(220,settings.audio_length,settings.sample_number)),".wav")
-print(image_processing.get_image_data(settings.image_target))
+#wav_file_processing.save_audio("x2",wav_file_processing.make_wav(sound_processing.make_sin(220,config.audio_length,config.sample_number)),".wav")
+image_processing.get_image_data(config.image_target)
 dib_header_decoding.print_header_info()
 
 
