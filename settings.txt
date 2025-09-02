@@ -1,1 +1,7 @@
+# app settings
+image_target:temp_test_bmp_image.bmp
 
+# output settings
+audio_resolution:2
+sample_rate:20000
+audio_length:2
