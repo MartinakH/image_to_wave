@@ -34,6 +34,7 @@ class config:
         
 
         print(config_list)
+        
 
 
 
@@ -290,7 +291,7 @@ class sound_processing:
 #wav_file_processing.save_audio("x2",wav_file_processing.make_wav(sound_processing.make_sin(220,config.audio_length,config.sample_number)),".wav")
 image_processing.get_image_data(config.image_target)
 dib_header_decoding.print_header_info()
-
+#test
 
 
 
